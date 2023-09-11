@@ -10,5 +10,4 @@
 #' @examples
 #' read_xmap()
 read_xmap <- function(file) {
-  "read_xmap"
 }
