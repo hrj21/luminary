@@ -14,6 +14,8 @@ library(testthat)
 # usethis::use_testthat()
 # usethis::use_test("read_xmap")
 # usethis::use_code_of_conduct("hefin.i.rhys@gmail.com")
+# usethis::create_github_token()
+# usethis::edit_r_environ()
 
 devtools::document()
 devtools::test()
