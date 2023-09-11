@@ -6,6 +6,8 @@
 \alias{luminary-package}
 \title{luminary: Tools for Working with xMAP INTELLIFLEX Data.}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 An R package for importing and working with Luminex data acquired using the xMAP INTELLIFLEX instrument.
 }
 \author{

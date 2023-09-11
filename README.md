@@ -1,5 +1,6 @@
-# luminary
-An R package for importing and working with Luminex data acquired using the xMAP INTELLIFLEX®instrument.
+# luminary <img src="man/figures/logo.png" align="right" height="139" />
+
+An R package for importing and working with Luminex data acquired using the xMAP INTELLIFLEX instrument.
 
 ## Code of Conduct
 

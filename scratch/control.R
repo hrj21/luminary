@@ -18,8 +18,8 @@ library(pkgdown)
 # usethis::use_code_of_conduct("hefin.i.rhys@gmail.com")
 # usethis::create_github_token()
 # usethis::edit_r_environ()
+# usethis::use_logo("inst/figures/luminary.png")
 
-s
 devtools::document()
 devtools::test()
 pkgdown::build_site()
