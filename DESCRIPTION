@@ -1,0 +1,26 @@
+Package: luminary
+Title: Tools for Working with xMAP INTELLIFLEX Data.
+Version: 0.0.0.9000
+Authors@R: 
+    person(
+    given   = "Hefin", 
+    family  = "Rhys", 
+    email   = "hefin.i.rhys@gmail.com", 
+    role    = c("aut", "cre"),
+    comment = c(ORCID = "https://orcid.org/0000-0002-7385-9014")
+    )
+Description: An R package for importing and working with Luminex data acquired 
+    using the xMAP INTELLIFLEX instrument.
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Imports: 
+    ggplot2,
+    tibble
+Config/testthat/edition: 3
