@@ -5,6 +5,7 @@
 library(devtools)
 library(usethis)
 library(testthat)
+library(pkgdown)
 
 # usethis::create_package()
 # usethis::create_from_github()
@@ -18,5 +19,7 @@ library(testthat)
 # usethis::create_github_token()
 # usethis::edit_r_environ()
 
+s
 devtools::document()
 devtools::test()
+pkgdown::build_site()
