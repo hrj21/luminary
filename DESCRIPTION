@@ -21,7 +21,9 @@ Suggests:
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Imports: 
+    dplyr,
     ggplot2,
+    readxl,
     S7,
     tibble
 Config/testthat/edition: 3

@@ -7,20 +7,25 @@ library(usethis)
 library(testthat)
 library(pkgdown)
 
+
+# Use once ----------------------------------------------------------------
 # usethis::create_package()
 # usethis::create_from_github()
 # usethis::use_package_doc()
 # usethis::use_vignette("Working-with-xMAP-data")
-# use_package("S7")
 # usethis::use_testthat()
-# usethis::use_test("read_xmap")
 # usethis::use_code_of_conduct("hefin.i.rhys@gmail.com")
 # usethis::create_github_token()
 # usethis::edit_r_environ()
 # usethis::use_logo("inst/figures/luminary.png")
 
-# usethis::use_r("intelliframe")
 
+# Use regularly -----------------------------------------------------------
+# use_package("dplyr")
+# usethis::use_r("intelliframe")
+# usethis::use_test("read_xmap")
+
+# Use often ---------------------------------------------------------------
 devtools::document()
 devtools::test()
 pkgdown::build_site()

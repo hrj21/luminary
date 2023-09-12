@@ -5,64 +5,32 @@
 \title{intelliframe class}
 \usage{
 intelliframe(
-  metadata,
-  summary,
-  expected,
-  mfi,
-  mfi_avg,
-  mfi_cv,
-  mfi_sd,
-  result,
-  result_avg,
-  result_cv,
-  result_sd,
-  recovery,
-  recovery_avg,
-  messages,
-  curve_data,
-  analytes,
-  excluded_wells
+  metadata = class_missing,
+  summary = class_missing,
+  expected = class_missing,
+  mfi = class_missing,
+  mfi_avg = class_missing,
+  mfi_cv = class_missing,
+  mfi_sd = class_missing,
+  result = class_missing,
+  result_avg = class_missing,
+  result_cv = class_missing,
+  result_sd = class_missing,
+  recovery = class_missing,
+  recovery_avg = class_missing,
+  messages = class_missing,
+  curve_data = class_missing,
+  analytes = class_missing,
+  excluded_wells = class_missing
 )
-}
-\arguments{
-\item{metadata}{List of metadata exported by the instrument.}
-
-\item{summary}{Data frame of interpolated values, averaged across replicates.}
-
-\item{expected}{Data frame of true values of standards and controls.}
-
-\item{mfi}{Data frame of raw MFI values.}
-
-\item{mfi_avg}{Data frame of raw MFI values, averaged across replicates.}
-
-\item{mfi_cv}{Data frame of coefficient of variation of raw MFI values.}
-
-\item{mfi_sd}{Data frame of standard deviation of raw MFI values.}
-
-\item{result}{Data frame of interpolated values.}
-
-\item{result_avg}{Data frame of interpolated values, averaged across replicates.}
-
-\item{result_cv}{Data frame of coefficient of variation of interpolated values.}
-
-\item{result_sd}{Data frame of standard deviation of interpolated values.}
-
-\item{recovery}{Data frame of interpolated value as a percentage of true values.}
-
-\item{recovery_avg}{Data frame of interpolated value as a percentage of true values, averaged across replicates.}
-
-\item{messages}{Data frame of well messages.}
-
-\item{curve_data}{Data frame of fitted curve data.}
-
-\item{analytes}{Data frame of analyte metadata.}
-
-\item{excluded_wells}{Data.frame of wells recorded but not included in analysis.}
-}
-\value{
-intelliframe S7 object
 }
 \description{
 Defines the constructor function for the intelliframe S7 class. Not meant to be
 called directly by the user (see \code{\link{read_xmap}}).
 }
+\section{Slots}{
+
+\describe{
+\item{\code{metadata}}{is this how I describe each of the properties?}
+}}
+
