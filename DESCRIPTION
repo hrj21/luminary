@@ -10,8 +10,8 @@ Authors@R:
     comment = c(ORCID = "https://orcid.org/0000-0002-7385-9014")
     )
 Description: An R package for importing and working with Luminex data acquired 
-    using the xMAP INTELLIFLEX instrument.
-License: GPL (>= 3)
+    using the xMAP INTELLIFLEX instrument
+License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
