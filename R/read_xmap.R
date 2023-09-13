@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-#' read_xmap()
+#' 1 + 1
 read_xmap <- function(file) {
 
   metadata <- readxl::read_xlsx(
@@ -28,7 +28,7 @@ read_xmap <- function(file) {
 
   well_data <- lapply(well_data_sheets, function(x) {
     extract_well_data(file, sheet = x)
-  }) |> setNames(well_data_sheets)
+  }) |> stats::setNames(well_data_sheets)
 
   expected     <- well_data$Expected
   mfi          <- well_data$MFI
@@ -50,7 +50,7 @@ read_xmap <- function(file) {
     range = readxl::cell_limits(c(3, 1), c(NA, 10), sheet = "Curve Data"),
     na    = "N/A"
   ) |>
-    dplyr::filter(!is.na(Group))
+    dplyr::filter(!is.na(.data$Group))
 
   analytes <- readxl::read_xlsx(file, sheet = "Analytes", skip = 20)
 

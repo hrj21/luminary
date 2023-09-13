@@ -2,10 +2,10 @@
 # Check package:   'Ctrl + Shift + E'
 # Test Package:    'Ctrl + Shift + T'
 
-library(devtools)
-library(usethis)
-library(testthat)
-library(pkgdown)
+# library(devtools)
+# library(usethis)
+# library(testthat)
+# library(pkgdown)
 
 
 # Use once ----------------------------------------------------------------
@@ -18,6 +18,7 @@ library(pkgdown)
 # usethis::create_github_token()
 # usethis::edit_r_environ()
 # usethis::use_logo("inst/figures/luminary.png")
+# usethis::use_github_actions()
 
 
 # Use regularly -----------------------------------------------------------
@@ -28,6 +29,7 @@ library(pkgdown)
 # Use often ---------------------------------------------------------------
 devtools::document()
 devtools::test()
+devtools::check()
 pkgdown::build_site()
 
 

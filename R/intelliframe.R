@@ -3,7 +3,10 @@
 #' Defines the constructor function for the intelliframe S7 class. Not meant to be
 #'   called directly by the user (see \code{\link{read_xmap}}).
 #'
-#'@slot metadata is this how I describe each of the properties?
+#' @name intelliframe-class
+#' @rdname intelliframe-class
+#'
+#'@param metadata A data.frame
 #'
 #'@export
 #'

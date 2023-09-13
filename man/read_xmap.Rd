@@ -16,5 +16,5 @@ A tibble
 Read data from xMAP instrument (this is the description)
 }
 \examples{
-read_xmap()
+1 + 1
 }

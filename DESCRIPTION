@@ -1,5 +1,5 @@
 Package: luminary
-Title: Tools for Working with xMAP INTELLIFLEX Data.
+Title: Tools for Working with xMAP INTELLIFLEX Data
 Version: 0.0.1
 Authors@R: 
     person(
@@ -10,7 +10,7 @@ Authors@R:
     comment = c(ORCID = "https://orcid.org/0000-0002-7385-9014")
     )
 Description: An R package for importing and working with Luminex data acquired 
-    using the xMAP INTELLIFLEX instrument
+    using the xMAP INTELLIFLEX instrument.
 License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -25,5 +25,6 @@ Imports:
     ggplot2,
     readxl,
     S7,
-    tibble
+    tibble,
+    rlang
 Config/testthat/edition: 3

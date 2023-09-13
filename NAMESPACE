@@ -3,3 +3,4 @@
 export(extract_well_data)
 export(intelliframe)
 export(read_xmap)
+importFrom(rlang,.data)

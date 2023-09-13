@@ -4,11 +4,11 @@
 \name{luminary-package}
 \alias{luminary}
 \alias{luminary-package}
-\title{luminary: Tools for Working with xMAP INTELLIFLEX Data.}
+\title{luminary: Tools for Working with xMAP INTELLIFLEX Data}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-An R package for importing and working with Luminex data acquired using the xMAP INTELLIFLEX instrument
+An R package for importing and working with Luminex data acquired using the xMAP INTELLIFLEX instrument.
 }
 \author{
 \strong{Maintainer}: Hefin Rhys \email{hefin.i.rhys@gmail.com} (\href{https://orcid.org/0000-0002-7385-9014}{ORCID})

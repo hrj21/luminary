@@ -9,7 +9,7 @@ extract_well_data(..., numeric_data = TRUE)
 \arguments{
 \item{...}{blah blah blah}
 
-\item{numeric_data}{}
+\item{numeric_data}{blah blah blah}
 }
 \value{
 A tibble of well data
@@ -18,5 +18,5 @@ A tibble of well data
 Title
 }
 \examples{
-blah
+1 + 1
 }
