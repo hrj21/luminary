@@ -6,29 +6,19 @@
 #' @name intelliframe-class
 #' @rdname intelliframe-class
 #'
-#'@param metadata A data.frame
-#'
-#'@export
+#' @export intelliframe
+#' @exportClass intelliframe
 #'
 intelliframe <- S7::new_class(
   "intelliframe",
   properties = list(
     "metadata"       = S7::class_data.frame,
-    "summary"        = S7::class_data.frame,
+    "analytes"       = S7::class_data.frame,
     "expected"       = S7::class_data.frame,
-    "mfi"            = S7::class_data.frame,
-    "mfi_avg"        = S7::class_data.frame,
-    "mfi_cv"         = S7::class_data.frame,
-    "mfi_sd"         = S7::class_data.frame,
-    "result"         = S7::class_data.frame,
-    "result_avg"     = S7::class_data.frame,
-    "result_cv"      = S7::class_data.frame,
-    "result_sd"      = S7::class_data.frame,
     "recovery"       = S7::class_data.frame,
     "recovery_avg"   = S7::class_data.frame,
-    "messages"       = S7::class_data.frame,
-    "curve_data"     = S7::class_data.frame,
-    "analytes"       = S7::class_data.frame,
-    "excluded_wells" = S7::class_data.frame
+    "well_data"      = S7::class_data.frame,
+    "summary_data"   = S7::class_data.frame,
+    "curve_data"     = S7::class_data.frame
   )
 )

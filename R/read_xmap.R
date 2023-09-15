@@ -17,32 +17,55 @@ read_xmap <- function(file) {
     col_names = c("Keyword", "Value")
   )
 
-  summary <- readxl::read_xlsx(
-    file,
-    sheet = "Summary",
-    skip  = 20,
-    na    = "-"
-  )
+  analytes <- readxl::read_xlsx(file, sheet = "Analytes", skip = 20)
 
   well_data_sheets <- readxl::excel_sheets(file)[2:12]
 
-  well_data <- lapply(well_data_sheets, function(x) {
-    extract_well_data(file, sheet = x)
+  sheet_data <- lapply(well_data_sheets, function(x) {
+    extract_sheet_data(file, sheet = x)
   }) |> stats::setNames(well_data_sheets)
 
-  expected     <- well_data$Expected
-  mfi          <- well_data$MFI
-  mfi_avg      <- well_data$`Avg. MFI`
-  mfi_cv       <- well_data$`MFI CV`
-  mfi_sd       <- well_data$`MFI SD`
-  result       <- well_data$Result
-  result_avg   <- well_data$`Avg. Result`
-  recovery     <- well_data$Recovery
-  recovery_avg <- well_data$`Avg. Recovery`
-  result_cv    <- well_data$`Result CV`
-  result_sd    <- well_data$`Result SD`
+  messages <- extract_sheet_data(file, sheet = "Messages", numeric_data = FALSE)
+  excluded_wells <-  readxl::read_xlsx(file, sheet = "Excluded Wells", skip = 20)
 
-  messages <- extract_well_data(file, sheet = "Messages", numeric_data = FALSE)
+  expected <- sheet_data$Expected
+
+  joining_vars <- c(
+    "Plate", "Group", "Location", "Well ID", "Sample ID", "Standard", "Type", "Analyte"
+  )
+
+  well_data <- sheet_data$MFI |>
+    dplyr::left_join(sheet_data$Result, by = joining_vars) |>
+    dplyr::left_join(messages,         by = joining_vars) |>
+    dplyr::left_join(excluded_wells,   by = joining_vars[-c(6:7)]) |>
+    dplyr::mutate(Excluded = dplyr::case_when(
+      is.na(`Exclude Reason`) ~ FALSE, .default = TRUE
+    )) |>
+    dplyr::left_join(expected, by = joining_vars[-3], suffix = c("", ".y")) |>
+    dplyr::select(-Location.y)
+
+  summary_mfi <- sheet_data$`Avg. MFI` |>
+    dplyr::left_join(sheet_data$`MFI CV`, by = joining_vars) |>
+    dplyr::left_join(sheet_data$`MFI SD`, by = joining_vars) |>
+    dplyr::rename("Avg" = MFI) |>
+    tidyr::pivot_longer(cols = c("Avg", "CV", "SD"), names_to = "Statistic", values_to = "MFI")
+
+  summary_result <- sheet_data$`Avg. Result` |>
+    dplyr::left_join(sheet_data$`Result CV`, by = joining_vars) |>
+    dplyr::left_join(sheet_data$`Result SD`, by = joining_vars) |>
+    dplyr::rename("Avg" = Result) |>
+    tidyr::pivot_longer(cols = c("Avg", "CV", "SD"), names_to = "Statistic", values_to = "Result")
+
+  summary_data <- dplyr::left_join(summary_mfi, summary_result) |>
+    tidyr::pivot_wider(
+      names_from = Statistic,
+      names_glue = "{.value}_{Statistic}",
+      values_from = c(MFI, Result)
+    ) |>
+    dplyr::left_join(expected, by = joining_vars)
+
+  recovery     <- sheet_data$Recovery
+  recovery_avg <- sheet_data$`Avg. Recovery`
 
   curve_data <- readxl::read_xlsx(
     file,
@@ -52,27 +75,14 @@ read_xmap <- function(file) {
   ) |>
     dplyr::filter(!is.na(.data$Group))
 
-  analytes <- readxl::read_xlsx(file, sheet = "Analytes", skip = 20)
-
-  excluded_wells <-  readxl::read_xlsx(file, sheet = "Excluded Wells", skip = 20)
-
   intelliframe(
-    metadata       = metadata,
-    summary        = summary,
-    expected       = expected,
-    mfi            = mfi,
-    mfi_avg        = mfi_avg,
-    mfi_cv         = mfi_cv,
-    mfi_sd         = mfi_sd,
-    result         = result,
-    result_avg     = result_avg,
-    result_cv      = result_cv,
-    result_sd      = result_sd,
-    recovery       = recovery,
-    recovery_avg   = recovery_avg,
-    messages       = messages,
-    curve_data     = curve_data,
-    analytes       = analytes,
-    excluded_wells = excluded_wells
+    metadata     = metadata,
+    analytes     = analytes,
+    expected     = expected,
+    recovery     = recovery,
+    recovery_avg = recovery_avg,
+    well_data    = well_data,
+    summary_data = summary_data,
+    curve_data   = curve_data
   )
 }

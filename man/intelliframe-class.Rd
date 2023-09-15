@@ -7,26 +7,14 @@
 \usage{
 intelliframe(
   metadata = class_missing,
-  summary = class_missing,
+  analytes = class_missing,
   expected = class_missing,
-  mfi = class_missing,
-  mfi_avg = class_missing,
-  mfi_cv = class_missing,
-  mfi_sd = class_missing,
-  result = class_missing,
-  result_avg = class_missing,
-  result_cv = class_missing,
-  result_sd = class_missing,
   recovery = class_missing,
   recovery_avg = class_missing,
-  messages = class_missing,
-  curve_data = class_missing,
-  analytes = class_missing,
-  excluded_wells = class_missing
+  well_data = class_missing,
+  summary_data = class_missing,
+  curve_data = class_missing
 )
-}
-\arguments{
-\item{metadata}{A data.frame}
 }
 \description{
 Defines the constructor function for the intelliframe S7 class. Not meant to be
