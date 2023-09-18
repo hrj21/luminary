@@ -27,6 +27,7 @@
 # usethis::use_test("read_xmap")
 
 # Use often ---------------------------------------------------------------
+v <- read_xmap("C:/users/u061745/Downloads/OneDrive_1_9-11-2023/U20plex_plate1_Belysa_MHF.xlsx")
 devtools::document()
 devtools::test()
 devtools::check()

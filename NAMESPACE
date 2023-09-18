@@ -2,9 +2,8 @@
 
 export(extract_sheet_data)
 export(intelliframe)
+export(plot_curves)
 export(read_xmap)
 exportClasses(intelliframe)
 exportMethods(print)
-importFrom(S7,"@")
-importFrom(S7,new_class)
 importFrom(rlang,.data)
