@@ -2,20 +2,22 @@
 % Please edit documentation in R/extract_sheet_data.R
 \name{extract_sheet_data}
 \alias{extract_sheet_data}
-\title{something something}
+\title{Extract blocks of data from xlsx file exported from Belysa}
 \usage{
 extract_sheet_data(file, sheet, numeric_data = TRUE)
 }
 \arguments{
-\item{numeric_data}{blah blah blah}
+\item{file}{Character string with path to excel file to be read.}
 
-\item{...}{blah blah blah}
+\item{sheet}{Character string of the sheet to be read.}
+
+\item{numeric_data}{Whether the data being read are numeric (default = \code{TRUE}).}
 }
 \value{
-A tibble of well data
+A tibble of sheet data data.
 }
 \description{
-something something
+this is a description
 }
 \examples{
 1 + 1

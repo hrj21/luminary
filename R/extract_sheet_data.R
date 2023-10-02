@@ -1,9 +1,12 @@
-#' something something
+#' Extract blocks of data from xlsx file exported from Belysa
 #'
-#' @param ... blah blah blah
-#' @param numeric_data blah blah blah
+#' this is a description
 #'
-#' @return A tibble of well data
+#' @param file Character string with path to excel file to be read.
+#' @param sheet Character string of the sheet to be read.
+#' @param numeric_data Whether the data being read are numeric (default = \code{TRUE}).
+#'
+#' @return A tibble of sheet data data.
 #' @export
 #'
 #' @importFrom rlang .data
@@ -16,13 +19,13 @@ extract_sheet_data <- function(file, sheet, numeric_data = TRUE) {
     dplyr::mutate(
       if(numeric_data) {
         dplyr::across(
-          .cols = -c("Plate", "Group", "Location", "Well ID", "Sample ID", "Standard"),
+          .cols = -c(.data$Plate, .data$Group, .data$Location, .data$`Well ID`, .data$`Sample ID`, .data$Standard),
           .fns  = as.numeric
         )},
       Type = gsub( " .*$", "", .data$Group)
     ) |>
     tidyr::pivot_longer(
-      cols = -c(Plate, Group, Location, `Well ID`, `Sample ID`, Standard, Type),
+      cols = -c(.data$Plate, .data$Group, .data$Location, .data$`Well ID`, .data$`Sample ID`, .data$Standard, .data$Type),
       names_to = "Analyte",
       values_to = gsub( "^.* ", "", sheet)
     )

@@ -6,14 +6,39 @@
 \usage{
 plot_curves(
   .data,
+  analytes = NULL,
   type = "individual",
   interactive = FALSE,
+  facet_scales = "fixed",
   point_size = 3,
-  ...
+  rug = TRUE,
+  model_limits = TRUE
 )
 }
 \arguments{
-\item{...}{}
+\item{.data}{Intelliframe object to be plotted.}
+
+\item{analytes}{Character vector of analytes to plot. If \code{NULL} (default), all
+analytes in the data are plotted.}
+
+\item{type}{Either \code{"individual"} (default) to plot individual replicates or
+\code{"summary"} to plot averaged values.}
+
+\item{interactive}{If \code{TRUE} will produce an interactive plot (defaults
+to \code{FALSE}).}
+
+\item{facet_scales}{Controls whether common or different axis scales are used
+for each facet. One of \code{"fixed"} (default), \code{"free_y"}, \code{"free_x"},
+or \code{"free"}.}
+
+\item{point_size}{Controls size of points drawn on the plot (defaults to 3).}
+
+\item{rug}{If \code{TRUE} (default) will add a "rug" of tickmarks to the x and y
+axes to denote Unknown and Control samples.}
+
+\item{model_limits}{If \code{TRUE} (default) will annotate the plots with lower
+limits of quantitation (LLoQ), limits of detection (LoD), and minimum
+detectable dose (MDD) if available.}
 }
 \value{
 ggplot object

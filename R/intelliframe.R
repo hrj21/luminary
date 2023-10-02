@@ -3,11 +3,19 @@
 #' Defines the constructor function for the intelliframe S7 class. Not meant to be
 #'   called directly by the user (see \code{\link{read_xmap}}).
 #'
-#' @name intelliframe-class
-#' @rdname intelliframe-class
+#' @name intelliframe
+#' @rdname intelliframe
+#'
+#' @param metadata blah blah
+#' @param analytes blah blah
+#' @param expected blah blah
+#' @param recovery blah blah
+#' @param recovery_avg blah blah
+#' @param well_data blah blah
+#' @param summary_data blah blah
+#' @param curve_data blah blah
 #'
 #' @export intelliframe
-#' @exportClass intelliframe
 #'
 intelliframe <- S7::new_class(
   "intelliframe",

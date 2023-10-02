@@ -20,13 +20,16 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
+Depends:
+    S7
 Imports: 
     dplyr,
     ggplot2,
     readxl,
-    S7,
     tibble,
     rlang,
     tidyr,
-    plotly
+    plotly,
+    stats,
+    scales
 Config/testthat/edition: 3

@@ -37,7 +37,7 @@ read_xmap <- function(file) {
   well_data <- sheet_data$MFI |>
     dplyr::left_join(sheet_data$Result, by = joining_vars) |>
     dplyr::left_join(messages,         by = joining_vars) |>
-    dplyr::left_join(excluded_wells,   by = joining_vars[-c(6:7)]) |>
+    dplyr::left_join(excluded_wells,   by = joining_vars[!joining_vars %in% c("Standard", "Type")]) |>
     dplyr::mutate(Excluded = dplyr::case_when(
       is.na(`Exclude Reason`) ~ FALSE, .default = TRUE
     )) |>
@@ -56,7 +56,7 @@ read_xmap <- function(file) {
     dplyr::rename("Avg" = Result) |>
     tidyr::pivot_longer(cols = c("Avg", "CV", "SD"), names_to = "Statistic", values_to = "Result")
 
-  summary_data <- dplyr::left_join(summary_mfi, summary_result) |>
+  summary_data <- dplyr::left_join(summary_mfi, summary_result, by = c(joining_vars, "Statistic")) |>
     tidyr::pivot_wider(
       names_from = Statistic,
       names_glue = "{.value}_{Statistic}",
