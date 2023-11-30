@@ -22,12 +22,12 @@
 
 
 # Use regularly -----------------------------------------------------------
-# use_package("dplyr")
-# usethis::use_r("intelliframe")
-# usethis::use_test("read_xmap")
+usethis::use_package("nplr")
+usethis::use_r("get_curve_data")
+usethis::use_test("get_curve_data")
 
 # Use often ---------------------------------------------------------------
-v <- read_xmap("C:/users/u061745/Downloads/OneDrive_1_9-11-2023/U20plex_plate1_Belysa_MHF.xlsx")
+v <- read_xmap("C:/Users/u061745/Downloads/U20plex_plate1_Belysa_MHF.xlsx")
 devtools::document()
 devtools::test()
 devtools::check()

@@ -31,5 +31,6 @@ Imports:
     tidyr,
     plotly,
     stats,
-    scales
+    scales,
+    nplr
 Config/testthat/edition: 3

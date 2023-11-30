@@ -43,6 +43,10 @@ plot_curves <- function(.data, analytes = NULL, type = "individual", interactive
 
   curve_data <- S7::`@`(.data, "curve_data")
 
+  if(!is.null(analytes)) {
+    curve_data <- dplyr::filter(curve_data, Analyte %in% analytes)
+  }
+
   curve_data_long <- curve_data |>
     tidyr::pivot_longer(c("LLoQ", "MDD", "LoD"), names_to = "Limit", values_to = "value")
 
