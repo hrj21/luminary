@@ -10,9 +10,9 @@ standard_list <- left_join(
   standards,
   expected,
   by = c("Plate", "Group", "Well ID", "Sample ID", "Standard", "Type", "Analyte", "Expected")
-) |>
-  dplyr::group_by(Analyte) |>
-  dplyr::group_split()
+)
+
+standard_list <- split(standard_list, standard_list$Analyte)
 
 
 fits <- lapply(standard_list, function(analyte) {
@@ -25,7 +25,7 @@ fits <- lapply(standard_list, function(analyte) {
   )
 })
 
-names(fits) <- names(standard_list) <- unique(standards$Analyte)
+names(fits) <- names(standard_list)
 
 well_data <- get_well_data(v)
 
@@ -35,13 +35,4 @@ refitted <- lapply(names(fits), function(analyte) {
     mutate(Result = getEstimates(fits[[analyte]], targets = MFI / maximum)$x)
 }) |> dplyr::bind_rows()
 
-# np1 <- nplr(
-#   x = c(standard_list[[9]]$Expected[-c(15:16)], standard_list[[9]]$Expected[c(15:16)]+0.01),
-#   y = (standard_list[[9]]$MFI/max(standard_list[[9]]$MFI)),
-#   npars = 5,
-# )
-#
-# plot(np1)
-#
-# getEstimates(np1, targets = standard_list[[9]]$MFI/max(standard_list[[9]]$MFI)) |>
-#   ggplot(aes(log10(x), y)) + geom_point() + geom_line()
+
