@@ -37,11 +37,12 @@
 #' @param silent Logical flag indicating whether warnings and/or messages during
 #'   curve fitting should be silenced. Defaults to \code{FALSE}.
 #'
-#' @return
+#' @return An intelliframe
 #' @export
 #'
 #' @examples
-refit_curves <- function(.data, npars = "all", weight_method = "res", add_to_zeroes = 0.01, silent = FALSE) {
+#' 1+1
+refit_curves <- function(.data, npars = "all", weight_method = "res", add_to_zeroes = 0.02, silent = FALSE) {
 
   well_data <- get_well_data(.data)
 
@@ -50,7 +51,7 @@ refit_curves <- function(.data, npars = "all", weight_method = "res", add_to_zer
   expected <- get_expected(.data) |>
     dplyr::select(Plate, Group, `Well ID`, `Sample ID`, Standard, Type, Analyte, Expected)
 
-  standard_list <- left_join(
+  standard_list <- dplyr::left_join(
     standards,
     expected,
     by = c("Plate", "Group", "Well ID", "Sample ID", "Standard", "Type", "Analyte", "Expected")
@@ -76,26 +77,39 @@ refit_curves <- function(.data, npars = "all", weight_method = "res", add_to_zer
 
   names(fits) <- names(standard_list)
 
-  refitted <- lapply(names(fits), function(analyte) {
-    maximum <- max(standard_list[[analyte]]$MFI)
-    dplyr::filter(well_data, Analyte == analyte) |>
-      dplyr::mutate(Result = getEstimates(fits[[analyte]], targets = MFI / maximum)$x)
-  }) |> dplyr::bind_rows()
+  suppressWarnings({
+    refitted <- lapply(names(fits), function(analyte) {
+      maximum <- max(standard_list[[analyte]]$MFI)
+      dplyr::filter(well_data, Analyte == analyte) |>
+        dplyr::mutate(Result = nplr::getEstimates(fits[[analyte]], targets = MFI / maximum)$x)
+    }) |> dplyr::bind_rows()
+  })
 
   intelliframe_out <- .data
   intelliframe_out@well_data <- refitted
+
+  intelliframe_out@recovery <- dplyr::filter(refitted, Type %in% c("Standard", "Control")) |>
+    dplyr::mutate(Recovery = dplyr::case_when(
+      Expected == 0 ~ NA_real_,
+      .default = Result / Expected
+    )) |>
+    dplyr::select(-c("MFI", "Result", "Messages", "Exclude Reason", "Excluded", "Expected"))
+
+  intelliframe_out@recovery_avg <- intelliframe_out@recovery |>
+    dplyr::select(-Location) |>
+    dplyr::left_join(
+      dplyr::select(intelliframe_out@recovery_avg, -Recovery),
+      by = c("Plate", "Group", "Well ID", "Sample ID", "Standard", "Type", "Analyte")
+      ) |>
+    dplyr::select(
+      "Plate", "Group", "Location", "Well ID", "Sample ID", "Standard", "Type",
+      "Analyte", "Recovery"
+    ) |>
+    dplyr::summarise(
+      .by = c("Plate", "Group", "Location", "Well ID", "Sample ID", "Standard",
+              "Type", "Analyte"),
+      Recovery = mean(Recovery, na.rm = TRUE)
+    )
+
   intelliframe_out
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

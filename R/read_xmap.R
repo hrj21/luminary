@@ -36,8 +36,8 @@ read_xmap <- function(file) {
 
   well_data <- sheet_data$MFI |>
     dplyr::left_join(sheet_data$Result, by = joining_vars) |>
-    dplyr::left_join(messages,         by = joining_vars) |>
-    dplyr::left_join(excluded_wells,   by = joining_vars[!joining_vars %in% c("Standard", "Type")]) |>
+    dplyr::left_join(messages,          by = joining_vars) |>
+    dplyr::left_join(excluded_wells,    by = joining_vars[!joining_vars %in% c("Standard", "Type")]) |>
     dplyr::mutate(Excluded = dplyr::case_when(
       is.na(`Exclude Reason`) ~ FALSE, .default = TRUE
     )) |>

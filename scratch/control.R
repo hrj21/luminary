@@ -23,11 +23,12 @@
 
 # Use regularly -----------------------------------------------------------
 usethis::use_package("nplr")
-usethis::use_r("get_curve_data")
-usethis::use_test("get_curve_data")
+usethis::use_r("str")
+usethis::use_test("str")
 
 # Use often ---------------------------------------------------------------
-v <- read_xmap("C:/Users/u061745/Downloads/U20plex_plate1_Belysa_MHF.xlsx")
+# v <- read_xmap("C:/Users/u061745/Downloads/U20plex_plate1_Belysa_MHF.xlsx")
+v <- read_xmap("C:/Users/u061745/Downloads/U5plex_plate1_Belysa_MHF.xlsx")
 devtools::document()
 devtools::test()
 devtools::check()

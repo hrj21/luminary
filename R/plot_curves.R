@@ -78,15 +78,15 @@ plot_curves <- function(.data, analytes = NULL, type = "individual", interactive
     ggplot2::scale_colour_brewer(type = "qual", palette = "Set1") +
     suppressWarnings(
       ggplot2::geom_point(
-        data = standard_data,
-        ggplot2::aes(Expected, MFI, text = paste0("Well:", Location, "</br>Plate:", Plate)),
+        data = experimental_data,
+        ggplot2::aes(Result, MFI, text = paste0("Well:", Location, "</br>Plate:", Plate)),
         size = point_size
       )
     ) +
     suppressWarnings(
       ggplot2::geom_point(
-        data = experimental_data,
-        ggplot2::aes(Result, MFI, text = paste0("Well:", Location, "</br>Plate:", Plate)),
+        data = standard_data,
+        ggplot2::aes(Expected, MFI, text = paste0("Well:", Location, "</br>Plate:", Plate)),
         size = point_size
       )
     ) +
