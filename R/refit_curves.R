@@ -58,8 +58,6 @@
 #' @param silent Logical flag indicating whether warnings and/or messages during
 #'   curve fitting should be silenced. Defaults to \code{FALSE}.
 #'
-<<<<<<< HEAD
-=======
 #' @references
 #' 1- Richards, F. J. (1959). A flexible growth function for empirical use. J Exp Bot 10, 290-300.
 #'
@@ -70,17 +68,12 @@
 #' regression - a new method based on robust nonlinear regression and the false
 #' discovery rate. BMC Bioinformatics. 2006 Mar 9;7:123.
 #'
->>>>>>> d81f79b2448472493549b2064aea2b7fa866752a
 #' @return An intelliframe
 #' @export
 #'
 #' @examples
 #' 1+1
-<<<<<<< HEAD
-refit_curves <- function(.data, npars = "all", weight_method = "res", add_to_zeroes = 0.02, silent = FALSE) {
-=======
-refit_curves <- function(.data, npars = "all", weight_method = "res", LPweight = 0.25, add_to_zeroes = 0.01, silent = FALSE) {
->>>>>>> d81f79b2448472493549b2064aea2b7fa866752a
+refit_curves <- function(.data, npars = "all", weight_method = "res", LPweight = 0.25, add_to_zeroes = 0.02, silent = FALSE) {
 
   well_data <- get_well_data(.data)
 

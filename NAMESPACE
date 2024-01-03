@@ -15,9 +15,6 @@ export(intelliframe)
 export(plot_curves)
 export(read_xmap)
 export(refit_curves)
-<<<<<<< HEAD
 importFrom(S7,"@")
-=======
->>>>>>> d81f79b2448472493549b2064aea2b7fa866752a
 importFrom(rlang,.data)
 importFrom(stats,reformulate)
