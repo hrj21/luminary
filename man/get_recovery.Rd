@@ -4,10 +4,10 @@
 \alias{get_recovery}
 \title{Extract the table of standard recoveries from intelliframe}
 \usage{
-get_recovery(.data)
+get_recovery(.intelliframe)
 }
 \arguments{
-\item{.data}{}
+\item{.intelliframe}{An intelliframe object.}
 }
 \value{
 A tibble

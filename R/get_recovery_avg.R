@@ -2,14 +2,14 @@
 #'
 #' Convenience function to extract the table of average standard recoveries from an intelliframe object
 #'
-#' @param .data
+#' @param .intelliframe An intelliframe object.
 #'
 #' @return A tibble
 #' @export
 #'
 #' @examples
 #' 1+1
-get_recovery_avg <- function(.data) {
-  S7::`@`(.data, recovery_avg)
+get_recovery_avg <- function(.intelliframe) {
+  S7::`@`(.intelliframe, "recovery_avg")
 }
 

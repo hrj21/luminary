@@ -4,10 +4,10 @@
 \alias{get_analytes}
 \title{Extract the table of analytes from intelliframe}
 \usage{
-get_analytes(.data)
+get_analytes(.intelliframe)
 }
 \arguments{
-\item{.data}{}
+\item{.intelliframe}{An intelliframe object.}
 }
 \value{
 A tibble

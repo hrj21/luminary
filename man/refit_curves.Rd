@@ -5,19 +5,16 @@
 \title{Refit standard curves}
 \usage{
 refit_curves(
-  .data,
+  .intelliframe,
   npars = "all",
   weight_method = "res",
-<<<<<<< HEAD
-=======
   LPweight = 0.25,
->>>>>>> d81f79b2448472493549b2064aea2b7fa866752a
-  add_to_zeroes = 0.01,
+  add_to_zeroes = 0.02,
   silent = FALSE
 )
 }
 \arguments{
-\item{.data}{Intelliframe object to refit}
+\item{.intelliframe}{Intelliframe object to refit}
 
 \item{npars}{A numeric value (or \code{"all"}) to specify the number of
 parameters to use in the model. If \code{"all"} the logistic model will be
@@ -27,12 +24,9 @@ See Details.}
 \item{weight_method}{A character string to specify what weight method to use.
 Options are \code{"res"}(default), \code{"sdw"}, \code{"gw"}. See Details.}
 
-<<<<<<< HEAD
-=======
 \item{LPweight}{a coefficient to adjust the weights. \code{LPweight = 0} will
 compute a non-weighted np-logistic regression.}
 
->>>>>>> d81f79b2448472493549b2064aea2b7fa866752a
 \item{add_to_zeroes}{A numeric value (\code{0.1} by default) added to zeros during
 the curve fitting procedure as it requires the concentration to be
 log10-transformed.}
@@ -48,28 +42,6 @@ Function to refit n-parameter logistic curves to standards in an intelliframe ob
 and interpolate concentrations for all samples, based on the updated models.
 }
 \details{
-<<<<<<< HEAD
-The 5-parameter logistic regression is of the form:
-y = B + (T - B)/\link{1 + 10^(b*(xmid - x))}^s
-
-where B and T are the bottom and top asymptotes, respectively, b and xmid are the Hill slope and the x-coordinate at the inflexion point, respectively, and s is an asymetric coefficient. This equation is sometimes refered to as the Richards' equation \link{1,2}.
-When specifying npars = 4, the s parameter is forced to be 1, and the corresponding model is a 4-parameter logistic regression, symetrical around its inflexion point. When specifying npars = 3 or npars = 2, add 2 more constraints and force B and T to be 0 and 1, respectively.
-Weight methods:
-The model parameters are optimized, simultaneously, using nlm, given a sum of squared errors function, sse(Y), to minimize:
-sse(Y) = Σ \link{W.(Yobs - Yfit)^2 }
-where Yobs, Yfit and W are the vectors of observed values, fitted values and weights, respectively.
-In order to reduce the effect of possible outliers, the weights can be computed in different ways, specified in nplr:
-residual weights, "res":
-W = (1/residuals)^LPweight
-where residuals and LPweight are the squared error between the observed and fitted values, and a tuning parameter, respectively. Best results are generally obtained by setting LPweight = 0.25 (default value), while setting LPweight = 0 results in computing a non-weighted sum of squared errors.
-standard weights, "sdw":
-W = 1/Var(Yobs_r)
-where Var(Yobs_r) is the vector of the within-replicates variances.
-general weights, "gw":
-W = 1/Yfit^LPweight
-where Yfit are the fitted values. As for the residuals-weights method, setting LPweight = 0 results in computing a non-weighted sum of squared errors.
-The standard weights and general weights methods are describes in \link{3}.
-=======
 Most of these details have been reproduced from the \code{\link{nplr}} function that is doing most of the heavy lifting.
 
 The 5-parameter logistic regression is of the form:
@@ -109,13 +81,10 @@ general weights, \code{"gw"}:
 where \eqn{Y_{\text{fit}}} are the fitted values. As for the residuals-weights method,
 setting \eqn{LPweight = 0} results in computing a non-weighted sum of squared errors.
 The standard weights and general weights methods are described in [3].
->>>>>>> d81f79b2448472493549b2064aea2b7fa866752a
 }
 \examples{
 1+1
 }
-<<<<<<< HEAD
-=======
 \references{
 1- Richards, F. J. (1959). A flexible growth function for empirical use. J Exp Bot 10, 290-300.
 
@@ -126,4 +95,3 @@ concentration-effect curves: empirical versus mechanistic models. Pharmacol Ther
 regression - a new method based on robust nonlinear regression and the false
 discovery rate. BMC Bioinformatics. 2006 Mar 9;7:123.
 }
->>>>>>> d81f79b2448472493549b2064aea2b7fa866752a

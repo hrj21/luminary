@@ -1,6 +1,7 @@
 #' Read data from xMAP instrument
 #'
-#' Read data from xMAP instrument (this is the description)
+#' Reads a single xMap experiment exported from the Belysa software
+#'   as an .xlsx file, and returns an intelliframe object.
 #'
 #' @param file Path to the file to be read as a character string.
 #'
@@ -42,25 +43,25 @@ read_xmap <- function(file) {
       is.na(`Exclude Reason`) ~ FALSE, .default = TRUE
     )) |>
     dplyr::left_join(expected, by = joining_vars[-3], suffix = c("", ".y")) |>
-    dplyr::select(-Location.y)
+    dplyr::select(-"Location.y")
 
   summary_mfi <- sheet_data$`Avg. MFI` |>
     dplyr::left_join(sheet_data$`MFI CV`, by = joining_vars) |>
     dplyr::left_join(sheet_data$`MFI SD`, by = joining_vars) |>
-    dplyr::rename("Avg" = MFI) |>
+    dplyr::rename("Avg" = "MFI") |>
     tidyr::pivot_longer(cols = c("Avg", "CV", "SD"), names_to = "Statistic", values_to = "MFI")
 
   summary_result <- sheet_data$`Avg. Result` |>
     dplyr::left_join(sheet_data$`Result CV`, by = joining_vars) |>
     dplyr::left_join(sheet_data$`Result SD`, by = joining_vars) |>
-    dplyr::rename("Avg" = Result) |>
+    dplyr::rename("Avg" = "Result") |>
     tidyr::pivot_longer(cols = c("Avg", "CV", "SD"), names_to = "Statistic", values_to = "Result")
 
   summary_data <- dplyr::left_join(summary_mfi, summary_result, by = c(joining_vars, "Statistic")) |>
     tidyr::pivot_wider(
-      names_from = Statistic,
+      names_from = "Statistic",
       names_glue = "{.value}_{Statistic}",
-      values_from = c(MFI, Result)
+      values_from = c("MFI", "Result")
     ) |>
     dplyr::left_join(expected, by = joining_vars)
 

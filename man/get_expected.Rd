@@ -4,10 +4,10 @@
 \alias{get_expected}
 \title{Extract the table of expected concentrations from intelliframe}
 \usage{
-get_expected(.data)
+get_expected(.intelliframe)
 }
 \arguments{
-\item{.data}{}
+\item{.intelliframe}{An intelliframe object.}
 }
 \value{
 A tibble

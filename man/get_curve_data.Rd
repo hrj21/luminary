@@ -4,10 +4,10 @@
 \alias{get_curve_data}
 \title{Extract the standard curve data from intelliframe}
 \usage{
-get_curve_data(.data)
+get_curve_data(.intelliframe)
 }
 \arguments{
-\item{.data}{}
+\item{.intelliframe}{An intelliframe object.}
 }
 \value{
 A tibble

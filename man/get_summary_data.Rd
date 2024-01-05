@@ -4,10 +4,10 @@
 \alias{get_summary_data}
 \title{Extract summary data from intelliframe object}
 \usage{
-get_summary_data(.data)
+get_summary_data(.intelliframe)
 }
 \arguments{
-\item{.data}{}
+\item{.intelliframe}{An intelliframe object.}
 }
 \value{
 A tibble

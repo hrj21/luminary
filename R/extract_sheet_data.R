@@ -1,15 +1,13 @@
-#' Extract blocks of data from xlsx file exported from Belysa
+#' Extract blocks of data from an xlsx file exported from Belysa
 #'
-#' this is a description
+#' Read an single sheet from an .xlsx file exported from the Belysa software,
+#'   and return an intelliframe object. Not meant to be called by the user.
 #'
 #' @param file Character string with path to excel file to be read.
 #' @param sheet Character string of the sheet to be read.
 #' @param numeric_data Whether the data being read are numeric (default = \code{TRUE}).
 #'
-#' @return A tibble of sheet data data.
-#' @export
-#'
-#' @importFrom rlang .data
+#' @return A tibble.
 #'
 #' @examples
 #' 1 + 1

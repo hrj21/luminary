@@ -4,10 +4,10 @@
 \alias{get_metadata}
 \title{Extract instrument metadata from intelliframe}
 \usage{
-get_metadata(.data)
+get_metadata(.intelliframe)
 }
 \arguments{
-\item{.data}{}
+\item{.intelliframe}{An intelliframe object.}
 }
 \value{
 A tibble

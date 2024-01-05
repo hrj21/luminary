@@ -6,6 +6,13 @@
 \usage{
 \method{print}{intelliframe}(x, max.level = 1, ...)
 }
+\arguments{
+\item{x}{An intelliframe object.}
+
+\item{max.level}{How many levels to print.}
+
+\item{...}{Unused.}
+}
 \description{
 print method for intelliframe class
 }

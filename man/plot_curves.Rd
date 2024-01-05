@@ -5,7 +5,7 @@
 \title{Plot standard curves with interpolated values}
 \usage{
 plot_curves(
-  .data,
+  .intelliframe,
   analytes = NULL,
   type = "individual",
   interactive = FALSE,
@@ -16,7 +16,7 @@ plot_curves(
 )
 }
 \arguments{
-\item{.data}{Intelliframe object to be plotted.}
+\item{.intelliframe}{Intelliframe object to be plotted.}
 
 \item{analytes}{Character vector of analytes to plot. If \code{NULL} (default), all
 analytes in the data are plotted.}

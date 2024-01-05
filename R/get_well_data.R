@@ -2,13 +2,13 @@
 #'
 #' Convenience function to extract individual well data from an intelliframe object
 #'
-#' @param .data
+#' @param .intelliframe An intelliframe object.
 #'
 #' @return A tibble
 #' @export
 #'
 #' @examples
 #' 1+1
-get_well_data <- function(.data) {
-  S7::`@`(.data, well_data)
+get_well_data <- function(.intelliframe) {
+  S7::`@`(.intelliframe, "well_data")
 }

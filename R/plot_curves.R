@@ -1,6 +1,6 @@
 #' Plot standard curves with interpolated values
 #'
-#' @param .data Intelliframe object to be plotted.
+#' @param .intelliframe Intelliframe object to be plotted.
 #' @param type Either \code{"individual"} (default) to plot individual replicates or
 #'   `"summary"` to plot averaged values.
 #' @param interactive If \code{TRUE} will produce an interactive plot (defaults
@@ -22,38 +22,38 @@
 #'
 #' @examples
 #' 1 + 1
-plot_curves <- function(.data, analytes = NULL, type = "individual", interactive = FALSE, facet_scales = "fixed", point_size = 3, rug = TRUE, model_limits = TRUE) {
-  stopifnot("data argument must be an intelliframe object" = S7::S7_inherits(.data, intelliframe))
+plot_curves <- function(.intelliframe, analytes = NULL, type = "individual", interactive = FALSE, facet_scales = "fixed", point_size = 3, rug = TRUE, model_limits = TRUE) {
+  stopifnot("data argument must be an intelliframe object" = S7::S7_inherits(.intelliframe, intelliframe))
 
   if(type == "individual") {
-    dat <- S7::`@`(.data, "well_data")
+    dat <- S7::`@`(.intelliframe, "well_data")
   } else if(type == "summary") {
-    dat <- S7::`@`(.data, "summary_data") |>
-      dplyr::rename("MFI" = MFI_Avg, "Result" = Result_Avg)
+    dat <- S7::`@`(.intelliframe, "summary_data") |>
+      dplyr::rename("MFI" = "MFI_Avg", "Result" = "Result_Avg")
   } else stop(paste0('Argument type should be "individual" or "summary", not "', type, '".'))
 
   if(!is.null(analytes)) {
     stopifnot("Analyte not found in data" = all(analytes %in% unique(dat$Analyte)))
-    dat <- dplyr::filter(dat, Analyte %in% analytes)
+    dat <- dplyr::filter(dat, "Analyte" %in% analytes)
   }
 
-  standard_data <- dplyr::filter(dat, Type == "Standard")
-  experimental_data <- dplyr::filter(dat, Type != "Standard") |>
-    dplyr::arrange(desc(Type))
+  standard_data <- dplyr::filter(dat, .data[["Type"]] == "Standard")
+  experimental_data <- dplyr::filter(dat, .data[["Type"]] != "Standard") |>
+    dplyr::arrange(dplyr::desc(.data[["Type"]]))
 
-  curve_data <- S7::`@`(.data, "curve_data")
+  curve_data <- S7::`@`(.intelliframe, "curve_data")
 
   if(!is.null(analytes)) {
-    curve_data <- dplyr::filter(curve_data, Analyte %in% analytes)
+    curve_data <- dplyr::filter(curve_data, "Analyte" %in% analytes)
   }
 
   curve_data_long <- curve_data |>
     tidyr::pivot_longer(c("LLoQ", "MDD", "LoD"), names_to = "Limit", values_to = "value")
 
-  text_heights <- dplyr::summarise(dat, .by = Analyte, Max = max(MFI))
+  text_heights <- dplyr::summarise(dat, .by = "Analyte", Max = max(.data[["MFI"]]))
 
   curve_data_long <- dplyr::left_join(curve_data_long, text_heights, by = "Analyte") |>
-    dplyr::mutate(n = dplyr::row_number(), text_height = Max / n, .by = "Analyte")
+    dplyr::mutate(n = dplyr::row_number(), text_height = .data[["Max"]] / .data[["n"]], .by = "Analyte")
 
   functions <- gsub("x", ".x", curve_data$Equation)
   functions <- gsub("y = ", "", functions)
@@ -61,32 +61,32 @@ plot_curves <- function(.data, analytes = NULL, type = "individual", interactive
 
   simulated_data <- lapply(curve_data$Analyte, function(x)  {
     f <- reformulate(functions[x]) |> rlang::as_function()
-    d <- dplyr::filter(dat, Analyte == x)
+    d <- dplyr::filter(dat, .data[["Analyte"]] == x)
     max_conc <- log10(max(d$Result, na.rm = TRUE) * 2)
     data.frame(
       Analyte = x,
       Result  = 10^seq(-1, max_conc, length.out = 1000)
-    ) |> dplyr::mutate(Predicted = f(Result))
+    ) |> dplyr::mutate("Predicted" = f(.data[["Result"]]))
   }) |> dplyr::bind_rows()
 
-  p <- ggplot2::ggplot(mapping = ggplot2::aes(col = Type)) +
+  p <- ggplot2::ggplot(mapping = ggplot2::aes(col = .data[["Type"]])) +
     ggplot2::geom_line(
       data = simulated_data,
-      ggplot2::aes(Result, Predicted),
+      ggplot2::aes(.data[["Result"]], .data[["Predicted"]]),
       inherit.aes = FALSE
     ) +
     ggplot2::scale_colour_brewer(type = "qual", palette = "Set1") +
     suppressWarnings(
       ggplot2::geom_point(
         data = experimental_data,
-        ggplot2::aes(Result, MFI, text = paste0("Well:", Location, "</br>Plate:", Plate)),
+        ggplot2::aes(.data[["Result"]], .data[["MFI"]], text = paste0("Well:", .data[["Location"]], "</br>Plate:", .data[["Plate"]])),
         size = point_size
       )
     ) +
     suppressWarnings(
       ggplot2::geom_point(
         data = standard_data,
-        ggplot2::aes(Expected, MFI, text = paste0("Well:", Location, "</br>Plate:", Plate)),
+        ggplot2::aes(.data[["Expected"]], .data[["MFI"]], text = paste0("Well:", .data[["Location"]], "</br>Plate:", .data[["Plate"]])),
         size = point_size
       )
     ) +
@@ -99,7 +99,7 @@ plot_curves <- function(.data, analytes = NULL, type = "individual", interactive
       suppressWarnings(
         ggplot2::geom_rug(
           data = experimental_data,
-          ggplot2::aes(Result, MFI, text = paste0("Well:", Location, "</br>Plate:", Plate)),
+          ggplot2::aes(.data[["Result"]], .data[["MFI"]], text = paste0("Well:", .data[["Location"]], "</br>Plate:", .data[["Plate"]])),
           alpha = 0.3
         )
       )
@@ -109,13 +109,13 @@ plot_curves <- function(.data, analytes = NULL, type = "individual", interactive
     p <- p +
       ggplot2::geom_vline(
         data = curve_data_long,
-        ggplot2::aes(xintercept = value),
+        ggplot2::aes(xintercept = .data[["value"]]),
         col = "black",
         linetype = "dashed"
       ) +
       ggplot2::geom_text(
         data = curve_data_long,
-        ggplot2::aes(x = 1.2 * (value + 1), y = text_height, label = Limit),
+        ggplot2::aes(x = 1.2 * (.data[["value"]] + 1), y = .data[["text_height"]], label = .data[["Limit"]]),
         angle = 0,
         hjust = 0,
         col = "black"

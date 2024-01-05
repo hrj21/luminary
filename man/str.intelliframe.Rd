@@ -4,7 +4,14 @@
 \alias{str.intelliframe}
 \title{str method for intelliframe class}
 \usage{
-\method{str}{intelliframe}(.data, ..., nest.lev = 0)
+\method{str}{intelliframe}(object, nest.lev = 0, ...)
+}
+\arguments{
+\item{object}{An intelliframe object.}
+
+\item{nest.lev}{How many levels to print.}
+
+\item{...}{Unused.}
 }
 \description{
 str method for intelliframe class

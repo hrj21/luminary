@@ -2,13 +2,13 @@
 #'
 #' Convenience function to extract the table of standard recoveries from an intelliframe object
 #'
-#' @param .data
+#' @param .intelliframe An intelliframe object.
 #'
 #' @return A tibble
 #' @export
 #'
 #' @examples
 #' 1+1
-get_recovery <- function(.data) {
-  S7::`@`(.data, recovery)
+get_recovery <- function(.intelliframe) {
+  S7::`@`(.intelliframe, "recovery")
 }

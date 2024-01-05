@@ -22,7 +22,7 @@
 
 
 # Use regularly -----------------------------------------------------------
-usethis::use_package("nplr")
+usethis::use_package("S7")
 usethis::use_r("str")
 usethis::use_test("str")
 

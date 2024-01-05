@@ -4,10 +4,10 @@
 \alias{get_recovery_avg}
 \title{Extract the table of average standard recoveries from intelliframe}
 \usage{
-get_recovery_avg(.data)
+get_recovery_avg(.intelliframe)
 }
 \arguments{
-\item{.data}{}
+\item{.intelliframe}{An intelliframe object.}
 }
 \value{
 A tibble

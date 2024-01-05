@@ -2,13 +2,13 @@
 #'
 #' Convenience function to extract summary data from an intelliframe object
 #'
-#' @param .data
+#' @param .intelliframe An intelliframe object.
 #'
 #' @return A tibble
 #' @export
 #'
 #' @examples
 #' 1+1
-get_summary_data <- function(.data) {
-  S7::`@`(.data, summary_data)
+get_summary_data <- function(.intelliframe) {
+  S7::`@`(.intelliframe, "summary_data")
 }

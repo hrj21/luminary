@@ -4,10 +4,10 @@
 \alias{get_well_data}
 \title{Extract individual well data from intelliframe object}
 \usage{
-get_well_data(.data)
+get_well_data(.intelliframe)
 }
 \arguments{
-\item{.data}{}
+\item{.intelliframe}{An intelliframe object.}
 }
 \value{
 A tibble

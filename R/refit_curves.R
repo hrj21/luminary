@@ -43,7 +43,7 @@
 #'   where \eqn{Y_{\text{fit}}} are the fitted values. As for the residuals-weights method,
 #'   setting \eqn{LPweight = 0} results in computing a non-weighted sum of squared errors.
 #'   The standard weights and general weights methods are described in \[3\].
-#' @param .data Intelliframe object to refit
+#' @param .intelliframe Intelliframe object to refit
 #' @param npars A numeric value (or \code{"all"}) to specify the number of
 #'   parameters to use in the model. If \code{"all"} the logistic model will be
 #'   tested with 2 to 5 parameters, and the best option will be returned.
@@ -73,14 +73,14 @@
 #'
 #' @examples
 #' 1+1
-refit_curves <- function(.data, npars = "all", weight_method = "res", LPweight = 0.25, add_to_zeroes = 0.02, silent = FALSE) {
+refit_curves <- function(.intelliframe, npars = "all", weight_method = "res", LPweight = 0.25, add_to_zeroes = 0.02, silent = FALSE) {
 
-  well_data <- get_well_data(.data)
+  well_data <- get_well_data(.intelliframe)
 
-  standards <-  dplyr::filter(well_data, Type == "Standard")
+  standards <-  dplyr::filter(well_data, .data[["Type"]] == "Standard")
 
-  expected <- get_expected(.data) |>
-    dplyr::select(Plate, Group, `Well ID`, `Sample ID`, Standard, Type, Analyte, Expected)
+  expected <- get_expected(.intelliframe) |>
+    dplyr::select("Plate", "Group", "Well ID", "Sample ID", "Standard", "Type", "Analyte", "Expected")
 
   standard_list <- dplyr::left_join(
     standards,
@@ -112,25 +112,25 @@ refit_curves <- function(.data, npars = "all", weight_method = "res", LPweight =
   suppressWarnings({
     refitted <- lapply(names(fits), function(analyte) {
       maximum <- max(standard_list[[analyte]]$MFI)
-      dplyr::filter(well_data, Analyte == analyte) |>
-        dplyr::mutate(Result = nplr::getEstimates(fits[[analyte]], targets = MFI / maximum)$x)
+      dplyr::filter(well_data, .data[["Analyte"]] == analyte) |>
+        dplyr::mutate(Result = nplr::getEstimates(fits[[analyte]], targets = .data[["MFI"]] / maximum)$x)
     }) |> dplyr::bind_rows()
   })
 
-  intelliframe_out <- .data
+  intelliframe_out <- .intelliframe
   intelliframe_out@well_data <- refitted
 
-  intelliframe_out@recovery <- dplyr::filter(refitted, Type %in% c("Standard", "Control")) |>
+  intelliframe_out@recovery <- dplyr::filter(refitted, .data[["Type"]] %in% c("Standard", "Control")) |>
     dplyr::mutate(Recovery = dplyr::case_when(
-      Expected == 0 ~ NA_real_,
-      .default = Result / Expected
+      .data[["Expected"]] == 0 ~ NA_real_,
+      .default = .data[["Result"]] / .data[["Expected"]]
     )) |>
     dplyr::select(-c("MFI", "Result", "Messages", "Exclude Reason", "Excluded", "Expected"))
 
   intelliframe_out@recovery_avg <- intelliframe_out@recovery |>
-    dplyr::select(-Location) |>
+    dplyr::select(-.data[["Location"]]) |>
     dplyr::left_join(
-      dplyr::select(intelliframe_out@recovery_avg, -Recovery),
+      dplyr::select(intelliframe_out@recovery_avg, -.data[["Recovery"]]),
       by = c("Plate", "Group", "Well ID", "Sample ID", "Standard", "Type", "Analyte")
       ) |>
     dplyr::select(
@@ -140,7 +140,7 @@ refit_curves <- function(.data, npars = "all", weight_method = "res", LPweight =
     dplyr::summarise(
       .by = c("Plate", "Group", "Location", "Well ID", "Sample ID", "Standard",
               "Type", "Analyte"),
-      Recovery = mean(Recovery, na.rm = TRUE)
+      Recovery = mean(.data[["Recovery"]], na.rm = TRUE)
     )
 
   intelliframe_out
