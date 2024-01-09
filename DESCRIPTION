@@ -15,6 +15,7 @@ License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+RdMacros: mathjaxr
 Suggests: 
     knitr,
     rmarkdown,
@@ -31,8 +32,9 @@ Imports:
     scales,
     nplr,
     utils,
-    S7
+    mathjaxr
 Config/testthat/edition: 3
 Depends: 
-    R (>= 2.10)
+    R (>= 2.10),
+    S7
 LazyData: true

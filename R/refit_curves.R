@@ -1,5 +1,6 @@
 #' Refit standard curves
 #'
+#' \loadmathjax
 #' Function to refit n-parameter logistic curves to standards in an intelliframe object
 #'   and interpolate concentrations for all samples, based on the updated models.
 #'
@@ -7,41 +8,41 @@
 #' Most of these details have been reproduced from the \code{\link{nplr}} function that is doing most of the heavy lifting.
 #'
 #' The 5-parameter logistic regression is of the form:
-#' \deqn{y = B + (T - B)/[1 + 10^{(b*(x_{\text{mid}} - x))}]^s}
+#' \mjdeqn{y = B + (T - B)/[1 + 10^{(b*(x_{\text{mid}} - x))}]^s}{}
 #'
-#'   where \eqn{B} and \eqn{T} are the bottom and top asymptotes, respectively,
-#'   \eqn{b} and \eqn{x_{\text{mid}}} are the Hill slope and the x-coordinate at
-#'   the inflection point, respectively, and \eqn{s} is an asymmetric coefficient.
+#'   where \mjeqn{B}{} and \mjeqn{T}{} are the bottom and top asymptotes, respectively,
+#'   \mjeqn{b}{} and \mjeqn{x_{\text{mid}}}{} are the Hill slope and the x-coordinate at
+#'   the inflection point, respectively, and \mjeqn{s}{} is an asymmetric coefficient.
 #'   This equation is sometimes referred to as the Richards' equation \[1,2\].
-#'   When specifying \code{npars = 4}, the \eqn{s} parameter is forced to be 1,
+#'   When specifying \code{npars = 4}, the \mjeqn{s}{} parameter is forced to be 1,
 #'   and the corresponding model is a 4-parameter logistic regression, symmetrical
 #'   around its inflection point. When specifying \code{npars = 3} or \code{npars = 2},
-#'   add 2 more constraints and force \eqn{B} and \eqn{T} to be 0 and 1, respectively.
+#'   add 2 more constraints and force \mjeqn{B}{} and \mjeqn{T}{} to be 0 and 1, respectively.
 #'
 #'   Weight methods:
 #'
 #'   The model parameters are optimized, simultaneously, using \code{\link{nlm}},
-#'   given a sum of squared errors function, \eqn{\text{sse(Y)}}, to minimize:
-#'   \deqn{\text{sse}(Y) = Σ [W(Y_{\text{obs}} - Y_{\text{fit}})^2 ]}
-#'   where \eqn{Y_{\text{obs}}}, \eqn{Y_{\text{fit}}} and \eqn{W} are the vectors
+#'   given a sum of squared errors function, \mjeqn{\text{sse(Y)}}{}, to minimize:
+#'   \mjdeqn{\text{sse}(Y) = \sum{W(Y_{\text{obs}} - Y_{\text{fit}})^2 }}{}
+#'   where \mjeqn{Y_{\text{obs}}}{}, \mjeqn{Y_{\text{fit}}}{} and \mjeqn{W}{} are the vectors
 #'   of observed values, fitted values and weights, respectively.
 #'   In order to reduce the effect of possible outliers, the weights can be computed in different ways:
 #'
 #'   residual weights, \code{"res"}:
-#'   \deqn{W = (1/\text{residuals})^\text{LPweight}}
-#'   where \eqn{\text{residuals}} and \eqn{\text{LPweight}} are the squared error
+#'   \mjdeqn{W = (1/\text{residuals})^\text{LPweight}}{}
+#'   where \mjeqn{\text{residuals}}{} and \mjeqn{\text{LPweight}}{} are the squared error
 #'   between the observed and fitted values, and a tuning parameter, respectively.
 #'   Best results are generally obtained by setting \code{LPweight = 0.25} (default value),
 #'   while setting \code{LPweight = 0} results in computing a non-weighted sum of squared errors.
 #'
 #'   standard weights, \code{"sdw"}:
-#'   \deqn{W = 1/\text{Var}(Y_{\text{obs}_r})}
-#'   where \eqn{\text{Var}(Y_{\text{obs}_r})} is the vector of the within-replicates variances.
+#'   \mjdeqn{W = 1/\text{Var}(Y_{\text{obs}_r})}{}
+#'   where \mjeqn{\text{Var}(Y_{\text{obs}_r})}{} is the vector of the within-replicates variances.
 #'
 #'   general weights, \code{"gw"}:
-#'   \deqn{W = 1/Y_{\text{fit}}^\text{LPweight}}
-#'   where \eqn{Y_{\text{fit}}} are the fitted values. As for the residuals-weights method,
-#'   setting \eqn{LPweight = 0} results in computing a non-weighted sum of squared errors.
+#'   \mjdeqn{W = 1/Y_{\text{fit}}^\text{LPweight}}{}
+#'   where \mjeqn{Y_{\text{fit}}}{} are the fitted values. As for the residuals-weights method,
+#'   setting \mjeqn{\text{LPweight} = 0}{} results in computing a non-weighted sum of squared errors.
 #'   The standard weights and general weights methods are described in \[3\].
 #' @param .intelliframe Intelliframe object to refit
 #' @param npars A numeric value (or \code{"all"}) to specify the number of

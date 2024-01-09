@@ -13,7 +13,8 @@ read_xmap(file)
 A tibble
 }
 \description{
-Read data from xMAP instrument (this is the description)
+Reads a single xMap experiment exported from the Belysa software
+as an .xlsx file, and returns an intelliframe object.
 }
 \examples{
 1 + 1

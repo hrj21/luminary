@@ -2,7 +2,7 @@
 % Please edit documentation in R/extract_sheet_data.R
 \name{extract_sheet_data}
 \alias{extract_sheet_data}
-\title{Extract blocks of data from xlsx file exported from Belysa}
+\title{Extract blocks of data from an xlsx file exported from Belysa}
 \usage{
 extract_sheet_data(file, sheet, numeric_data = TRUE)
 }
@@ -14,10 +14,11 @@ extract_sheet_data(file, sheet, numeric_data = TRUE)
 \item{numeric_data}{Whether the data being read are numeric (default = \code{TRUE}).}
 }
 \value{
-A tibble of sheet data data.
+A tibble.
 }
 \description{
-this is a description
+Read an single sheet from an .xlsx file exported from the Belysa software,
+and return an intelliframe object. Not meant to be called by the user.
 }
 \examples{
 1 + 1
