@@ -56,6 +56,9 @@
 #' @param add_to_zeroes A numeric value (\code{0.1} by default) added to zeros during
 #'   the curve fitting procedure as it requires the concentration to be
 #'   log10-transformed.
+#' @param use_excluded Logical flag indicating whether wells with a value of
+#'   \code{TRUE} in the \code{Excluded} column are used to refit the curves and
+#'   calculate summary statistics. Defaults to \code{FALSE}.
 #' @param silent Logical flag indicating whether warnings and/or messages during
 #'   curve fitting should be silenced. Defaults to \code{FALSE}.
 #'
@@ -74,26 +77,42 @@
 #'
 #' @examples
 #' 1+1
-refit_curves <- function(.intelliframe, npars = "all", weight_method = "res", LPweight = 0.25, add_to_zeroes = 0.02, silent = FALSE) {
+refit_curves <- function(
+  .intelliframe,
+  npars         = "all",
+  weight_method = "res",
+  LPweight      = 0.25,
+  add_to_zeroes = 0.02,
+  use_excluded  = FALSE,
+  silent        = FALSE
+) {
 
   well_data <- get_well_data(.intelliframe)
 
   standards <-  dplyr::filter(well_data, .data[["Type"]] == "Standard")
 
-  expected <- get_expected(.intelliframe) |>
-    dplyr::select("Plate", "Group", "Well ID", "Sample ID", "Standard", "Type", "Analyte", "Expected")
+  ident_cols <- c(
+    "Plate", "Group", "Location", "Well ID", "Sample ID", "Standard", "Type",
+    "Analyte", "Expected"
+    )
 
-  standard_list <- dplyr::left_join(
-    standards,
-    expected,
-    by = c("Plate", "Group", "Well ID", "Sample ID", "Standard", "Type", "Analyte", "Expected")
-  )
+  excluded_wells <- well_data$Excluded
+
+  expected <- get_expected(.intelliframe) |>
+    dplyr::select(dplyr::all_of(ident_cols))
+
+  standard_list <- dplyr::left_join(standards, expected, by = ident_cols)
 
   standard_list <- split(standard_list, standard_list$Analyte)
 
   fits <- lapply(standard_list, function(analyte) {
+
+    if(!use_excluded) {
+      analyte <- analyte[-excluded_wells, ]
+    }
+
     non_zero <- ifelse(
-      analyte$Expected < 1,
+      analyte$Expected == 0,
       analyte$Expected + add_to_zeroes,
       analyte$Expected
     )
@@ -108,41 +127,32 @@ refit_curves <- function(.intelliframe, npars = "all", weight_method = "res", LP
     )
   })
 
+  intelliframe_out <- .intelliframe
+
   names(fits) <- names(standard_list)
 
-  suppressWarnings({
-    refitted <- lapply(names(fits), function(analyte) {
-      maximum <- max(standard_list[[analyte]]$MFI)
-      dplyr::filter(well_data, .data[["Analyte"]] == analyte) |>
-        dplyr::mutate(Result = nplr::getEstimates(fits[[analyte]], targets = .data[["MFI"]] / maximum)$x)
-    }) |> dplyr::bind_rows()
-  })
+  prop(intelliframe_out, "well_data") <-
+    update_well_data(well_data, fits, standard_list, silent)
 
-  intelliframe_out <- .intelliframe
-  intelliframe_out@well_data <- refitted
+  prop(intelliframe_out, "recovery") <-
+    update_recovery(well_data)
 
-  intelliframe_out@recovery <- dplyr::filter(refitted, .data[["Type"]] %in% c("Standard", "Control")) |>
-    dplyr::mutate(Recovery = dplyr::case_when(
-      .data[["Expected"]] == 0 ~ NA_real_,
-      .default = .data[["Result"]] / .data[["Expected"]]
-    )) |>
-    dplyr::select(-c("MFI", "Result", "Messages", "Exclude Reason", "Excluded", "Expected"))
+  prop(intelliframe_out, "recovery_avg") <-
+    update_recovery_avg(
+      get_recovery(intelliframe_out),
+      get_recovery_avg(intelliframe_out),
+      use_excluded,
+      excluded_wells
+    )
 
-  intelliframe_out@recovery_avg <- intelliframe_out@recovery |>
-    dplyr::select(-.data[["Location"]]) |>
-    dplyr::left_join(
-      dplyr::select(intelliframe_out@recovery_avg, -.data[["Recovery"]]),
-      by = c("Plate", "Group", "Well ID", "Sample ID", "Standard", "Type", "Analyte")
-      ) |>
-    dplyr::select(
-      "Plate", "Group", "Location", "Well ID", "Sample ID", "Standard", "Type",
-      "Analyte", "Recovery"
-    ) |>
-    dplyr::summarise(
-      .by = c("Plate", "Group", "Location", "Well ID", "Sample ID", "Standard",
-              "Type", "Analyte"),
-      Recovery = mean(.data[["Recovery"]], na.rm = TRUE)
+  prop(intelliframe_out, "summary_data") <-
+    update_summary_data(
+      well_data,
+      get_summary_data(intelliframe_out),
+      use_excluded,
+      excluded_wells
     )
 
   intelliframe_out
 }
+

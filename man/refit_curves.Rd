@@ -10,6 +10,7 @@ refit_curves(
   weight_method = "res",
   LPweight = 0.25,
   add_to_zeroes = 0.02,
+  use_excluded = FALSE,
   silent = FALSE
 )
 }
@@ -30,6 +31,10 @@ compute a non-weighted np-logistic regression.}
 \item{add_to_zeroes}{A numeric value (\code{0.1} by default) added to zeros during
 the curve fitting procedure as it requires the concentration to be
 log10-transformed.}
+
+\item{use_excluded}{Logical flag indicating whether wells with a value of
+\code{TRUE} in the \code{Excluded} column are used to refit the curves and
+calculate summary statistics. Defaults to \code{FALSE}.}
 
 \item{silent}{Logical flag indicating whether warnings and/or messages during
 curve fitting should be silenced. Defaults to \code{FALSE}.}

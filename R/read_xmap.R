@@ -27,7 +27,13 @@ read_xmap <- function(file) {
   }) |> stats::setNames(well_data_sheets)
 
   messages <- extract_sheet_data(file, sheet = "Messages", numeric_data = FALSE)
-  excluded_wells <-  readxl::read_xlsx(file, sheet = "Excluded Wells", skip = 20)
+
+  excluded_wells <-  readxl::read_xlsx(
+    file,
+    sheet     = "Excluded Wells",
+    skip      = 20,
+    col_types = "text"
+  )
 
   expected <- sheet_data$Expected
 

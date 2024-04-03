@@ -23,8 +23,8 @@
 
 # Use regularly -----------------------------------------------------------
 usethis::use_package("S7")
-usethis::use_r("str")
-usethis::use_test("str")
+usethis::use_r("update_summary_data")
+usethis::use_test("update_summary_data")
 
 # Use often ---------------------------------------------------------------
 # v <- read_xmap("C:/Users/u061745/Downloads/U20plex_plate1_Belysa_MHF.xlsx")

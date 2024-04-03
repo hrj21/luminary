@@ -1,5 +1,9 @@
 # TODO
 
 ## refit_curves
-- update $summary_data
+- consider excluded wells
 - update $curve_data
+- explore whether multiple standard groups for the same analyte can occur
+
+## plot_curves
+- add option to change number of rows

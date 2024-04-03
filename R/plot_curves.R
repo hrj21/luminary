@@ -75,7 +75,8 @@ plot_curves <- function(.intelliframe, analytes = NULL, type = "individual", int
       ggplot2::aes(.data[["Result"]], .data[["Predicted"]]),
       inherit.aes = FALSE
     ) +
-    ggplot2::scale_colour_brewer(type = "qual", palette = "Set1") +
+    # ggplot2::scale_colour_brewer(type = "qual", palette = "Set1") +
+    ggplot2::scale_colour_manual(values = c("Control" = "#E41A1C", "Standard" = "#377EB8", "Unknown" = "#4DAF4A")) +
     suppressWarnings(
       ggplot2::geom_point(
         data = experimental_data,

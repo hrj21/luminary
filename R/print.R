@@ -1,13 +1,13 @@
 #' print method for intelliframe class
 #'
+#'
 #' @param x An intelliframe object.
 #' @param max.level How many levels to print.
 #' @param ... Unused.
 #'
-#' @exportS3Method
-print.intelliframe <- function(x, max.level = 1, ...) {
-  counts <- get_well_data(x) |>
-    dplyr::summarise(.by = "Type", dplyr::n())
+#' @noRd
+method(print, intelliframe) <- function(x, max.level = 1, ...) {
+  counts <- dplyr::summarise(get_well_data(x), .by = "Type", dplyr::n())
 
   counts <- lapply(c("Standard", "Control", "Unknown"), function(.type) {
     if(.type %in% counts$Type) {

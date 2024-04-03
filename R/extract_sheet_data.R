@@ -9,8 +9,7 @@
 #'
 #' @return A tibble.
 #'
-#' @examples
-#' 1 + 1
+#' @noRd
 extract_sheet_data <- function(file, sheet, numeric_data = TRUE) {
   readxl::read_xlsx(path = file, sheet = sheet, skip = 24, na = c("-", " ")) |>
     dplyr::filter(.data$Location != "Location") |>
