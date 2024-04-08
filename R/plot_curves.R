@@ -12,7 +12,8 @@
 #'   for each facet. One of \code{"fixed"} (default), \code{"free_y"}, \code{"free_x"},
 #'   or \code{"free"}.
 #' @param rug If \code{TRUE} (default) will add a "rug" of tickmarks to the x and y
-#'   axes to denote Unknown and Control samples.
+#'   axes to denote Unknown and Control samples. Setting this to \code{FALSE} may speed
+#'   up rendering.
 #' @param model_limits If \code{TRUE} (default) will annotate the plots with lower
 #'   limits of quantitation (LLoQ), limits of detection (LoD), and minimum
 #'   detectable dose (MDD) if available.
@@ -34,7 +35,7 @@ plot_curves <- function(.intelliframe, analytes = NULL, type = "individual", int
 
   if(!is.null(analytes)) {
     stopifnot("Analyte not found in data" = all(analytes %in% unique(dat$Analyte)))
-    dat <- dplyr::filter(dat, "Analyte" %in% analytes)
+    dat <- dplyr::filter(dat, .data[["Analyte"]] %in% analytes)
   }
 
   standard_data <- dplyr::filter(dat, .data[["Type"]] == "Standard")
@@ -44,7 +45,7 @@ plot_curves <- function(.intelliframe, analytes = NULL, type = "individual", int
   curve_data <- S7::`@`(.intelliframe, "curve_data")
 
   if(!is.null(analytes)) {
-    curve_data <- dplyr::filter(curve_data, "Analyte" %in% analytes)
+    curve_data <- dplyr::filter(curve_data, .data[["Analyte"]] %in% analytes)
   }
 
   curve_data_long <- curve_data |>
@@ -75,7 +76,6 @@ plot_curves <- function(.intelliframe, analytes = NULL, type = "individual", int
       ggplot2::aes(.data[["Result"]], .data[["Predicted"]]),
       inherit.aes = FALSE
     ) +
-    # ggplot2::scale_colour_brewer(type = "qual", palette = "Set1") +
     ggplot2::scale_colour_manual(values = c("Control" = "#E41A1C", "Standard" = "#377EB8", "Unknown" = "#4DAF4A")) +
     suppressWarnings(
       ggplot2::geom_point(

@@ -105,7 +105,7 @@ refit_curves <- function(
 
   standard_list <- split(standard_list, standard_list$Analyte)
 
-  fits <- lapply(standard_list, function(analyte) {
+  fits <<- lapply(standard_list, function(analyte) {
 
     if(!use_excluded) {
       analyte <- analyte[-excluded_wells, ]
