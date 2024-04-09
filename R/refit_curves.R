@@ -131,26 +131,36 @@ refit_curves <- function(
 
   names(fits) <- names(standard_list)
 
-  prop(intelliframe_out, "well_data") <-
+  S7::prop(intelliframe_out, "well_data") <-
     update_well_data(well_data, fits, standard_list, silent)
 
-  prop(intelliframe_out, "recovery") <-
-    update_recovery(well_data)
+  S7::prop(intelliframe_out, "recovery") <-
+    update_recovery(
+      S7::prop(intelliframe_out, "well_data")
+    )
 
-  prop(intelliframe_out, "recovery_avg") <-
+  S7::prop(intelliframe_out, "recovery_avg") <-
     update_recovery_avg(
-      get_recovery(intelliframe_out),
-      get_recovery_avg(intelliframe_out),
+      S7::prop(intelliframe_out, "recovery"),
+      S7::prop(intelliframe_out, "recovery_avg"),
       use_excluded,
       excluded_wells
     )
 
-  prop(intelliframe_out, "summary_data") <-
+  S7::prop(intelliframe_out, "summary_data") <-
     update_summary_data(
-      well_data,
-      get_summary_data(intelliframe_out),
+      S7::prop(intelliframe_out, "well_data"),
+      S7::prop(intelliframe_out, "summary_data"),
       use_excluded,
       excluded_wells
+    )
+
+  S7::prop(intelliframe_out, "curve_data") <-
+    update_curve_data(
+      S7::prop(intelliframe_out, "summary_data"),
+      S7::prop(intelliframe_out, "well_data"),
+      fits,
+      silent
     )
 
   intelliframe_out

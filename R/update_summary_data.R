@@ -11,10 +11,8 @@
 #' @param .excluded_wells Logical vector indicating whether each well is
 #'   excluded.
 #'
-#' @return An intelliframe
-#' @export
+#' @return A tibble
 #'
-#' @noRd
 update_summary_data <- function(.well_data, .summary_data, .use_excluded, .excluded_wells) {
   correct_location <- dplyr::select(.well_data, -Location) |>
     dplyr::left_join(

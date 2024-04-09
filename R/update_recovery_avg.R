@@ -11,10 +11,8 @@
 #' @param .excluded_wells Logical vector indicating whether each well is
 #'   excluded.
 #'
-#' @return An intelliframe
-#' @export
+#' @return A tibble
 #'
-#' @noRd
 update_recovery_avg <- function(.recovery, .recovery_avg, .use_excluded, .excluded_wells) {
   correct_location <- dplyr::select(.recovery, -Location) |>
     dplyr::left_join(

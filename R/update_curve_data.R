@@ -1,6 +1,18 @@
-update_well_data <- function(.summary_data, .well_data, .fits, .standard_list, .silent) {
+#' update_curve_data
+#'
+#' Update the curve_data property from an intelliframe object using a list of
+#'   model fits. Not meant to be called by the user.
+#'
+#' @param .summary_data A tibble containing the summary_data property.
+#' @param .well_data A tibble containing the well_data property.
+#' @param .fits A list of model fits returned by \code{nplr::nplr()}.
+#' @param .silent Should luminary warnings be printed?
+#'
+#' @return A tibble
+#'
+update_curve_data <- function(.summary_data, .well_data, .fits, .silent) {
 
-lapply(names(.fits), function(x) {
+new_curve_data <- lapply(names(.fits), function(x) {
 
   lloq <- dplyr::filter(
     .summary_data,
@@ -53,10 +65,6 @@ lapply(names(.fits), function(x) {
     })
   })
 
-  if(!silent) {
-    warning("LLoQ, MDD, and LoD may be calculated differently than in Belysa. See ?refit_curves for details.")
-  }
-
   if(.fits[[x]]@weightMethod == "res") {
     weight_meth <- paste0("(1/residual)^", .fits[[x]]@LPweight)
   } else if(.fits[[x]]@weightMethod == "sdw") {
@@ -93,4 +101,13 @@ lapply(names(.fits), function(x) {
     Equation    = model_eqn
   )
 }) |> dplyr::bind_rows()
+
+if(!.silent) {
+  warning(
+    "LLoQ, MDD, and LoD may be calculated differently than in Belysa. See ?refit_curves for details.",
+    call. = FALSE
+  )
+}
+
+new_curve_data
 }

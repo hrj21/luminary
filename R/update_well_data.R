@@ -9,10 +9,8 @@
 #' @param .silent Logical flag indicating whether warnings and messages during
 #' interpolation should be silenced.
 #'
-#' @return An intelliframe
-#' @export
+#' @return A tibble
 #'
-#' @noRd
 update_well_data <- function(.well_data, .fits, .standard_list, .silent) {
   lapply(names(.fits), function(analyte) {
 

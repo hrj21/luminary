@@ -5,10 +5,8 @@
 #'
 #' @param .well_data A tibble containing the well_data property.
 #'
-#' @return An intelliframe
-#' @export
+#' @return A tibble
 #'
-#' @noRd
 update_recovery <- function(.well_data){
   dplyr::filter(.well_data, .data[["Type"]] %in% c("Standard", "Control")) |>
 

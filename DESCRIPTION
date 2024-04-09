@@ -32,9 +32,9 @@ Imports:
     scales,
     nplr,
     utils,
-    mathjaxr
+    mathjaxr,
+    S7
 Config/testthat/edition: 3
 Depends: 
-    R (>= 3.0),
-    S7
+    R (>= 3.0)
 LazyData: true

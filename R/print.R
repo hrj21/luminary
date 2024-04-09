@@ -6,7 +6,7 @@
 #' @param ... Unused.
 #'
 #' @noRd
-method(print, intelliframe) <- function(x, max.level = 1, ...) {
+S7::method(print, intelliframe) <- function(x, max.level = 1, ...) {
   counts <- dplyr::summarise(get_well_data(x), .by = "Type", dplyr::n())
 
   counts <- lapply(c("Standard", "Control", "Unknown"), function(.type) {

@@ -34,7 +34,8 @@ or \code{"free"}.}
 \item{point_size}{Controls size of points drawn on the plot (defaults to 3).}
 
 \item{rug}{If \code{TRUE} (default) will add a "rug" of tickmarks to the x and y
-axes to denote Unknown and Control samples.}
+axes to denote Unknown and Control samples. Setting this to \code{FALSE} may speed
+up rendering.}
 
 \item{model_limits}{If \code{TRUE} (default) will annotate the plots with lower
 limits of quantitation (LLoQ), limits of detection (LoD), and minimum
