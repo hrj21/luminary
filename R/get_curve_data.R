@@ -10,6 +10,6 @@
 #' @examples
 #' 1+1
 get_curve_data <- function(.intelliframe) {
-  S7::`@`(.intelliframe, "curve_data")
+  S7::prop(.intelliframe, "curve_data")
 }
 

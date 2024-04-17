@@ -27,9 +27,9 @@ plot_curves <- function(.intelliframe, analytes = NULL, type = "individual", int
   stopifnot("data argument must be an intelliframe object" = S7::S7_inherits(.intelliframe, intelliframe))
 
   if(type == "individual") {
-    dat <- S7::`@`(.intelliframe, "well_data")
+    dat <- S7::prop(.intelliframe, "well_data")
   } else if(type == "summary") {
-    dat <- S7::`@`(.intelliframe, "summary_data") |>
+    dat <- S7::prop(.intelliframe, "summary_data") |>
       dplyr::rename("MFI" = "MFI_Avg", "Result" = "Result_Avg")
   } else stop(paste0('Argument type should be "individual" or "summary", not "', type, '".'))
 
@@ -42,7 +42,7 @@ plot_curves <- function(.intelliframe, analytes = NULL, type = "individual", int
   experimental_data <- dplyr::filter(dat, .data[["Type"]] != "Standard") |>
     dplyr::arrange(dplyr::desc(.data[["Type"]]))
 
-  curve_data <- S7::`@`(.intelliframe, "curve_data")
+  curve_data <- S7::prop(.intelliframe, "curve_data")
 
   if(!is.null(analytes)) {
     curve_data <- dplyr::filter(curve_data, .data[["Analyte"]] %in% analytes)

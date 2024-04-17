@@ -10,5 +10,5 @@
 #' @examples
 #' 1+1
 get_metadata <- function(.intelliframe) {
-  S7::`@`(.intelliframe, "metadata")
+  S7::prop(.intelliframe, "metadata")
 }

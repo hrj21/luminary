@@ -103,6 +103,7 @@ new_curve_data <- lapply(names(.fits), function(x) {
 }) |> dplyr::bind_rows()
 
 if(!.silent) {
+  message()
   warning(
     "LLoQ, MDD, and LoD may be calculated differently than in Belysa. See ?refit_curves for details.",
     call. = FALSE

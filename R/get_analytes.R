@@ -10,5 +10,5 @@
 #' @examples
 #' 1+1
 get_analytes <- function(.intelliframe) {
-  S7::`@`(.intelliframe, "analytes")
+  S7::prop(.intelliframe, "analytes")
 }

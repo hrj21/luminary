@@ -10,5 +10,5 @@
 #' @examples
 #' 1+1
 get_recovery <- function(.intelliframe) {
-  S7::`@`(.intelliframe, "recovery")
+  S7::prop(.intelliframe, "recovery")
 }

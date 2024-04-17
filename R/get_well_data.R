@@ -10,5 +10,5 @@
 #' @examples
 #' 1+1
 get_well_data <- function(.intelliframe) {
-  S7::`@`(.intelliframe, "well_data")
+  S7::prop(.intelliframe, "well_data")
 }

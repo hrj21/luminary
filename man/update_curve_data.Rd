@@ -7,7 +7,7 @@
 update_curve_data(.summary_data, .well_data, .fits, .silent)
 }
 \arguments{
-\item{.summary_data}{A tibble containing the curve_data property.}
+\item{.summary_data}{A tibble containing the summary_data property.}
 
 \item{.well_data}{A tibble containing the well_data property.}
 

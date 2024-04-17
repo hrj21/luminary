@@ -10,6 +10,6 @@
 #' @examples
 #' 1+1
 get_recovery_avg <- function(.intelliframe) {
-  S7::`@`(.intelliframe, "recovery_avg")
+  S7::prop(.intelliframe, "recovery_avg")
 }
 

@@ -10,5 +10,5 @@
 #' @examples
 #' 1+1
 get_expected <- function(.intelliframe) {
-  S7::`@`(.intelliframe, "expected")
+  S7::prop(.intelliframe, "expected")
 }

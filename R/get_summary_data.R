@@ -10,5 +10,5 @@
 #' @examples
 #' 1+1
 get_summary_data <- function(.intelliframe) {
-  S7::`@`(.intelliframe, "summary_data")
+  S7::prop(.intelliframe, "summary_data")
 }
